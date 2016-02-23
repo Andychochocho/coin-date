@@ -86,14 +86,23 @@ namespace Collections
       Category testCategory = new Category("Household Chores");
       testCategory.Save();
 
-      Coins firstCoin = new Coins("Mow the lawn", testCategory.GetId());
+      Coins firstCoin = new Coins("Mow the lawn", testCategory.GetId(), new DateTime (2016, 2, 16));
       firstCoin.Save();
 
-      Coins secondCoin = new Coins("Do the dishes", testCategory.GetId());
+      Coins secondCoin = new Coins("Do the dishes", testCategory.GetId(), new DateTime (2016, 2, 16));
       secondCoin.Save();
 
       List<Coins> testCoinsList = new List<Coins> {firstCoin, secondCoin};
       List<Coins> resultCoinsList = testCategory.GetCoins();
+
+      foreach (var coin in testCoinsList)
+      {
+        Console.WriteLine(coin.GetId());
+      }
+      foreach (var coin in resultCoinsList)
+      {
+        Console.WriteLine(coin.GetId());
+      }
 
       Assert.Equal(testCoinsList, resultCoinsList);
     }

@@ -50,7 +50,7 @@ namespace Collections
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM categories;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM category;", conn);
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
@@ -79,7 +79,7 @@ namespace Collections
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO categories (name) OUTPUT INSERTED.id VALUES (@CategoryName);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO category (name) OUTPUT INSERTED.id VALUES (@CategoryName);", conn);
 
       SqlParameter nameParameter = new SqlParameter();
       nameParameter.ParameterName = "@CategoryName";
@@ -105,7 +105,7 @@ namespace Collections
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("DELETE FROM categories;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM category;", conn);
       cmd.ExecuteNonQuery();
     }
 
@@ -115,7 +115,7 @@ namespace Collections
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM categories WHERE id = @CategoryId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM category WHERE id = @CategoryId;", conn);
       SqlParameter categoryIdParameter = new SqlParameter();
       categoryIdParameter.ParameterName = "@CategoryId";
       categoryIdParameter.Value = id.ToString();
@@ -162,7 +162,8 @@ namespace Collections
         int coinsId = rdr.GetInt32(0);
         string CoinsDescription = rdr.GetString(1);
         int coinsCategoryId = rdr.GetInt32(2);
-        Coins newCoins = new Coins(CoinsDescription, coinsCategoryId, coinsId);
+        DateTime coinsDate = rdr.GetDateTime(3);
+        Coins newCoins = new Coins(CoinsDescription, coinsCategoryId, coinsDate, coinsId);
         coin.Add(newCoins);
       }
       if (rdr != null)

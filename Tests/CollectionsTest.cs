@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using Xunit;
 
 namespace Collections
@@ -23,38 +24,38 @@ namespace Collections
     [Fact]
     public void Test_Equal_ReturnsTrueIfDescriptionAreTheSame()
     {
-      Coins firstCoin = new Coins("American Quarters", 1);
-      Coins secondCoin = new Coins("American Quarters", 1);
+      Coins firstCoin = new Coins("American Quarters", 1, new DateTime (2016, 2, 18));
+      Coins secondCoin = new Coins("American Quarters", 1, new DateTime (2016, 2, 18));
 
       Assert.Equal(firstCoin, secondCoin);
     }
     [Fact]
     public void Test_Save_SavestoDatabase()
     {
-      Coins testCoins = new Coins("American Quarters", 1);
+      Coins testCoins = new Coins("American Quarters", 1, new DateTime (2016, 2, 18));
       testCoins.Save();
       List<Coins> result = Coins.GetAll();
       List<Coins> testList = new List<Coins> {testCoins};
-      Assert.Equal( testList,result);
+
+      Assert.Equal(testList, result);
     }
     [Fact]
     public void Test_Save_AssignsIdToObjects()
     {
-      Coins testCoins = new Coins("American Quarters", 1);
+      Coins testCoins = new Coins("American Quarters", 1, new DateTime (2016, 2, 18));
       testCoins.Save();
 
       Coins savedCoins = Coins.GetAll()[0];
 
       int result = savedCoins.GetId();
       int testId = testCoins.GetId();
-
       Assert.Equal(testId, result);
     }
 
     [Fact]
     public void Test_Find_FindsCoinsInDatabase()
     {
-      Coins testCoins = new Coins("American Quarters", 1);
+      Coins testCoins = new Coins("American Quarters", 1, new DateTime (2016, 2, 18));
       testCoins.Save();
 
       Coins foundCoins = Coins.Find(testCoins.GetId());

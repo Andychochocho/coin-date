@@ -35,7 +35,7 @@ namespace Collections
         return View["coins_form.cshtml", AllCategories];
       };
       Post["/coins/new"] = _ => {
-        Coins newCoins = new Coins(Request.Form["coins-description"], Request.Form["category-id"]);
+        Coins newCoins = new Coins(Request.Form["coins-description"], Request.Form["category-id"], Request.Form["date"]);
         newCoins.Save();
         return View["success.cshtml"];
       };
