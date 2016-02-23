@@ -23,15 +23,15 @@ namespace Collections
     [Fact]
     public void Test_Equal_ReturnsTrueIfDescriptionAreTheSame()
     {
-      Coins firstCoin = new Coins("American Quarters");
-      Coins secondCoin = new Coins("American Quarters");
+      Coins firstCoin = new Coins("American Quarters", 1);
+      Coins secondCoin = new Coins("American Quarters", 1);
 
       Assert.Equal(firstCoin, secondCoin);
     }
     [Fact]
     public void Test_Save_SavestoDatabase()
     {
-      Coins testCoins = new Coins("American Quarters");
+      Coins testCoins = new Coins("American Quarters", 1);
       testCoins.Save();
       List<Coins> result = Coins.GetAll();
       List<Coins> testList = new List<Coins> {testCoins};
@@ -40,7 +40,7 @@ namespace Collections
     [Fact]
     public void Test_Save_AssignsIdToObjects()
     {
-      Coins testCoins = new Coins("American Quarters");
+      Coins testCoins = new Coins("American Quarters", 1);
       testCoins.Save();
 
       Coins savedCoins = Coins.GetAll()[0];
@@ -54,7 +54,7 @@ namespace Collections
     [Fact]
     public void Test_Find_FindsCoinsInDatabase()
     {
-      Coins testCoins = new Coins("American Quarters");
+      Coins testCoins = new Coins("American Quarters", 1);
       testCoins.Save();
 
       Coins foundCoins = Coins.Find(testCoins.GetId());

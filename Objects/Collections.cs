@@ -8,11 +8,13 @@ namespace Collections
   {
     private int _id;
     private string _description;
+    private int _categoryId;
 
-    public Coins(string Description, int Id =0)
+    public Coins(string Description, int CategoryId, int Id =0)
     {
       _id = Id;
       _description = Description;
+      _categoryId = CategoryId;
     }
 
     public override bool Equals(System.Object otherCoins)
@@ -24,8 +26,9 @@ namespace Collections
       {
         Coins newCoins = (Coins) otherCoins;
         bool idEquality = (this.GetId() == newCoins.GetId());
-        bool descriptionEquality = (this.GetDescription() == newCoins.GetDescription());
-        return (idEquality && descriptionEquality);
+        bool descriptionEquality = this.GetDescription() == newCoins.GetDescription();
+        bool categoryEquality = this.GetCategoryId() == newCoins.GetCategoryId();
+        return (idEquality && descriptionEquality && categoryEquality);
       }
     }
 
@@ -40,6 +43,16 @@ namespace Collections
     public void SetDescription(string newDescription)
     {
       _description = newDescription;
+    }
+
+    public int GetCategoryId()
+    {
+      return _categoryId;
+    }
+
+    public void SetCategoryId(int newCategoryId)
+    {
+      _categoryId = newCategoryId;
     }
 
     public static List<Coins> GetAll()
@@ -57,7 +70,8 @@ namespace Collections
       {
         int coinId = rdr.GetInt32(0);
         string coinDescription = rdr.GetString(1);
-        Coins newCoins = new Coins(coinDescription, coinId);
+        int coinsCategoryId = rdr.GetInt32(2);
+        Coins newCoins = new Coins(coinDescription, coinsCategoryId, coinId);
         allCoins.Add(newCoins);
       }
       if (rdr != null)
@@ -76,11 +90,17 @@ namespace Collections
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("Insert INTO Coins (description) OUTPUT INSERTED.id VALUES (@CoinsDescription);",conn);
+      SqlCommand cmd = new SqlCommand("Insert INTO Coins (description, category_id) OUTPUT INSERTED.id VALUES (@CoinsDescription, @CoinsCategoryId);",conn);
 
       SqlParameter descriptionParameter = new SqlParameter();
       descriptionParameter.ParameterName = "@CoinsDescription";
       descriptionParameter.Value = this.GetDescription();
+
+      SqlParameter categoryIdParameter = new SqlParameter();
+      categoryIdParameter.ParameterName = "@CoinsCategoryId";
+      categoryIdParameter.Value = this.GetCategoryId();
+
+      cmd.Parameters.Add(categoryIdParameter);
       cmd.Parameters.Add(descriptionParameter);
       rdr = cmd.ExecuteReader();
 
@@ -121,12 +141,15 @@ namespace Collections
 
       int foundCoinsId =0;
       string foundCoinsDescription = null;
+      int foundCoinsCategoryId = 0;
+
       while(rdr.Read())
       {
         foundCoinsId = rdr.GetInt32(0);
         foundCoinsDescription = rdr.GetString(1);
+        foundCoinsCategoryId = rdr.GetInt32(2);
       }
-      Coins foundCoins = new Coins(foundCoinsDescription, foundCoinsId);
+      Coins foundCoins = new Coins(foundCoinsDescription,foundCoinsCategoryId, foundCoinsId);
 
       if(rdr != null)
       {
