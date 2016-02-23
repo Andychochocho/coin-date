@@ -149,7 +149,7 @@ namespace Collections
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM coins WHERE category_Id = @CategoryId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM coins WHERE category_Id = @CategoryId ORDER BY time DESC;", conn);
       SqlParameter categoryIdParameter = new SqlParameter();
       categoryIdParameter.ParameterName = "@CategoryId";
       categoryIdParameter.Value = this.GetId();

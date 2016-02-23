@@ -78,7 +78,7 @@ namespace Collections
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("Select * FROM  coins;",conn);
+      SqlCommand cmd = new SqlCommand("Select * FROM  coins ORDER BY time DESC;",conn);
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
