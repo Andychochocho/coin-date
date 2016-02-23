@@ -1,0 +1,17 @@
+<h2>Here are all the tasks in this category:</h2>
+
+@if (@Model["coins"].Count == 0)
+{
+  <p>No coins have been added yet!</p>
+}
+else
+{
+  <ol>
+    @foreach (var coins in @Model["coins"])
+    {
+      <li>@coins.GetDescription()</li>
+    }
+  </ol>
+}
+<p><a href="/coins/new">Add a new coin</a></p>
+<p><a href="/">Return to Main Page</a></p>

@@ -1,0 +1,19 @@
+@if (@Model.Count == 0)
+{
+  <p>No coins have been added yet!</p>
+}
+else
+{
+  <h1>Here is your list of tasks:</h1>
+  <ul>
+    @foreach (var coin in Model)
+    {
+      <li>@coin.GetDescription()</li>
+    }
+  </ul>
+  <form action="/coins/delete" method="post">
+    <button type="submit">Clear all coins</button>
+  </form>
+}
+<p><a href="/coins/new">Add a new coin</a></p>
+<p><a href="/">Return home</a></p>

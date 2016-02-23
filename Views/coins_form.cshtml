@@ -1,0 +1,14 @@
+<h1>Add a new Coins</h1>
+<form action="/Coins/new" method="post">
+  <label for="Coins-description">Coins description:</label>
+  <input id="Coins-description" name="coins-description" type="text">
+  <select name="category-id">
+    @foreach (var category in Model)
+    {
+      <option value="@category.GetId()">@category.GetName()</option>
+    }
+  </select>
+  <button type="submit">Add new Coins</button>
+</form>
+<p><a href="/">Back home</a></p>
+<p><a href="/Coinss">View all Coins</a></p>
