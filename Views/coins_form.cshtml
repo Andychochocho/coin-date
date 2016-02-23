@@ -2,6 +2,7 @@
 <form action="/Coins/new" method="post">
   <label for="Coins-description">Coins description:</label>
   <input id="Coins-description" name="coins-description" type="text">
+  <input type="date" name="dateTime">
   <select name="category-id">
     @foreach (var category in Model)
     {

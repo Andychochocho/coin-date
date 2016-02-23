@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Nancy;
 using Nancy.ViewEngines.Razor;
@@ -35,7 +36,10 @@ namespace Collections
         return View["coins_form.cshtml", AllCategories];
       };
       Post["/coins/new"] = _ => {
-        Coins newCoins = new Coins(Request.Form["coins-description"], Request.Form["category-id"], Request.Form["date"]);
+        DateTime dt = Convert.ToDateTime((string)Request.Form["dateTime"]);
+        // DateTime newDateTime = new DateTime (Convert.ToDateTime(Request.Form["dateTime"]+" 00:00:00.00"));
+        Console.WriteLine((string)Request.Form["dateTime"]);
+        Coins newCoins = new Coins(Request.Form["coins-description"], Request.Form["category-id"], dt);
         newCoins.Save();
         return View["success.cshtml"];
       };
